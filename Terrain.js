@@ -15,6 +15,6 @@ export class Terrain {
                 - Math.floor(terrainNoiseGen.noise(i / a) * b) - minElevation;
         }
         this.maxElevation = Math.min(...this.elevations); // using min because y = 0 is at the top of the screen
-        console.log(this.maxElevation);
+        //console.log(this.maxElevation);
     }
 }

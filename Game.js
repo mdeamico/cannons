@@ -66,20 +66,37 @@ export class Game {
             }
         }
 
-        // damage terrain for this.balls that hit the terrain
-        for (let i = this.balls.length - 1; i >= 0; --i) {
-            let ball = this.balls[i];
-
+        // damage terrain and players for balls that hit the terrain
+        for (let ball of this.balls) {
             if (ball.isAlive) continue;
             
+            // Collision w/ Terrain
             let minX = Math.max(0, Math.floor(ball.x - ball.radius));
             let maxX = Math.min(this.terrain.elevations.length, Math.floor(ball.x + ball.radius));
             for (let x = minX; x < maxX; ++x) {
                 this.terrain.elevations[x] += ball.radius;
             }
             drawTerrain(this.terrain, this.canvases.terrain);
+
+            // Collision w/ Players
+            if (Math.abs(ball.x - this.player1.x) < 10 /*tolerance*/) {
+                this.player1.health -= 10;
+                console.log('Player1 Hit! Health: ', this.player1.health);
+            }
+            if (Math.abs(ball.x - this.player2.x) < 10 /*tolerance*/) {
+                this.player2.health -= 10;
+                console.log('Player2 Hit! Health: ', this.player2.health);
+            }
+        }
+
+        // remove balls that hit the terrain
+        for (let i = this.balls.length - 1; i >= 0; --i) {
+            let ball = this.balls[i];
+
+            if (ball.isAlive) continue;
             this.balls.splice(i, 1);
         }
+
     }
 
     draw() {
