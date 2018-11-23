@@ -6,5 +6,6 @@ export class Ball {
         this.vx = 1;
         this.vy = -1;
         this.isAlive = true;
+        this.color = "#000000";
     }
 }

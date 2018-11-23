@@ -16,7 +16,10 @@ export class Game {
         this.terrain = new Terrain(canvases.terrain);
 
         this.player1 = new Player();
+        this.player1.color = "#B357AE";
+
         this.player2 = new Player();
+        this.player2.color = "#57aeb3";
 
         this.balls = [];
 
@@ -127,22 +130,14 @@ export class Game {
     releaseBall(e) {
 
         let player = this.player1.myTurn ? this.player1 : this.player2;
-
-        // let offset = this.canvases.player.getBoundingClientRect();
-    
-        // let mousex = e.clientX - offset.left;
-        // let mousey = e.clientY - offset.top;
-    
-        // let angle = Math.atan2(-(mousey - player.y), (mousex - player.x));
-        // console.log(angle);
     
         let ball = new Ball();
+        ball.color = player.color;
         ball.x = player.x - 3;
         ball.y = player.y - 5;
         
         ball.vx = this.reticle.power / 10 * Math.cos(this.reticle.aimangle);
         ball.vy = -this.reticle.power / 10 * Math.sin(this.reticle.aimangle);
-        //console.log([ball.vx, ball.vy]);
     
         this.balls.push(ball);
     
@@ -165,7 +160,7 @@ function drawBalls(balls, ctx) {
 
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = ball.color;
         ctx.fill();
         ctx.closePath();
     }
@@ -185,10 +180,11 @@ function drawTerrain(terrain, canvas) {
 
 
 function drawPlayers(player1, player2, ctx) {
-    ctx.fillStyle = "#B357AE";
-    ctx.rect(player1.x - 3, player1.y - 5, 6, 5);
-    ctx.rect(player2.x - 3, player2.y - 5, 6, 5);
-    ctx.fill(); 
+    ctx.fillStyle = player1.color;
+    ctx.fillRect(player1.x - 3, player1.y - 5, 6, 5);
+    
+    ctx.fillStyle = player2.color;
+    ctx.fillRect(player2.x - 3, player2.y - 5, 6, 5);
 }
 
 
