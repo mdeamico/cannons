@@ -1,7 +1,8 @@
 import { Terrain } from './Terrain.js';
 import { Ball } from './Ball.js';
 import { Player } from './Player.js';
-import { Reticle } from './Reticle.js';
+//import { Reticle } from './Reticle.js';
+import { Weapon } from './Weapon.js'
 
 export class Game {
     
@@ -15,15 +16,15 @@ export class Game {
 
         this.terrain = new Terrain(canvases.terrain);
 
+        this.balls = [];
+
         this.player1 = new Player();
         this.player1.color = "#B357AE";
+        this.player1.weapon = new Weapon(this.player1, this.balls);
 
         this.player2 = new Player();
         this.player2.color = "#57aeb3";
-
-        this.balls = [];
-
-        this.reticle = new Reticle();
+        this.player2.weapon = new Weapon(this.player2, this.balls);
     }
 
     setup() {
@@ -47,6 +48,8 @@ export class Game {
                 this.player2.y = this.terrain.elevations[i];
             }
         }
+
+        this.activePlayer = this.player1;
         this.player1.myTurn = true;
     }
 
@@ -109,44 +112,16 @@ export class Game {
 
         // draw on player layer
         this.ctx.player.clearRect(0, 0, this.canvases.player.width, this.canvases.player.height);
-        drawReticle(this.reticle, this.player1.myTurn ? this.player1 : this.player2, this.ctx.player);
+        this.activePlayer.weapon.reticle.draw(this.ctx.player);
         drawPlayers(this.player1, this.player2, this.ctx.player);  
     }
 
-    triggerReticleUpdate(e) {
-        // TODO: refactor this function. Some of the reticle update occurs here,
-        // some occurs in the updateReticle function.
-        // The whole reticle coding seems to be out of place.
-        let player = this.player1.myTurn ? this.player1 : this.player2;
-
-        let offset = this.canvases.player.getBoundingClientRect();
-    
-        this.reticle.mousex = e.clientX - offset.left;
-        this.reticle.mousey = e.clientY - offset.top;
-    
-        updateReticle(this.reticle, player);
-    }
-
-    releaseBall(e) {
-
-        let player = this.player1.myTurn ? this.player1 : this.player2;
-    
-        let ball = new Ball();
-        ball.color = player.color;
-        ball.x = player.x - 3;
-        ball.y = player.y - 5;
-        
-        ball.vx = this.reticle.power / 10 * Math.cos(this.reticle.aimangle);
-        ball.vy = -this.reticle.power / 10 * Math.sin(this.reticle.aimangle);
-    
-        this.balls.push(ball);
-    
-        this.switchPlayer();
-        player = this.player1.myTurn ? this.player1 : this.player2;
-        updateReticle(this.reticle, player);
-    }
-
     switchPlayer() {
+        if (this.player1.myTurn) {
+            this.activePlayer = this.player2;
+        } else {
+            this.activePlayer = this.player1;
+        }
         this.player1.myTurn = !this.player1.myTurn;
         this.player2.myTurn = !this.player2.myTurn;
     }
@@ -185,25 +160,4 @@ function drawPlayers(player1, player2, ctx) {
     
     ctx.fillStyle = player2.color;
     ctx.fillRect(player2.x - 3, player2.y - 5, 6, 5);
-}
-
-
-function drawReticle(reticle, player, ctx) {
-
-    ctx.beginPath();
-    ctx.moveTo(player.x, player.y);
-    ctx.lineTo(player.x + reticle.power * Math.cos(reticle.aimangle), 
-               player.y - reticle.power * Math.sin(reticle.aimangle));
-    ctx.stroke();
-}
-
-
-function updateReticle(reticle, player) {
-    let dx = reticle.mousex - player.x;
-    let dy = reticle.mousey - player.y;
-    reticle.aimangle = Math.atan2(-dy, dx);
-    reticle.power = Math.sqrt(Math.pow(dy, 2), Math.pow(dx, 2));
-    reticle.power = 20 + (reticle.power - 100) * (50 - 20) / (200 - 100);
-    reticle.power = reticle.power > 50 ? 50 : reticle.power; 
-    reticle.power = reticle.power < 10 ? 10 : reticle.power;
 }
