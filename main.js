@@ -22,7 +22,7 @@ requestAnimationFrame(gameLoop);
 // Input Handler ---------------------------------------------------------------
 document.getElementById('player-layer').onmouseup = function(e) {
 
-    game.activePlayer.weapon.fire(e);
+    game.activePlayer.weapon.fire();
     game.switchPlayer();
 }
 

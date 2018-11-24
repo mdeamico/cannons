@@ -32,7 +32,7 @@ export class Weapon {
         this.aimPower = this.aimPower < 10 ? 10 : this.aimPower;
     }
 
-    fire(e) {
+    fire() {
         if (this.ammunition <= 0) {
             console.log(this.player.color, ' is out of ammo');
             return;
