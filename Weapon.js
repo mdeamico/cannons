@@ -12,7 +12,6 @@ export class Weapon {
         this.aimMousey = 0;
 
         this.ctx = ctx;
-        //this.reticle = new Reticle(player);
     }
 
     aim(e, playerCanvasBoundingClientRect) {
