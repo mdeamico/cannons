@@ -20,11 +20,11 @@ export class Game {
 
         this.player1 = new Player();
         this.player1.color = "#B357AE";
-        this.player1.weapon = new Weapon(this.player1, this.balls);
+        this.player1.weapon = new Weapon(this.player1, this.balls, this.ctx.player);
 
         this.player2 = new Player();
         this.player2.color = "#57aeb3";
-        this.player2.weapon = new Weapon(this.player2, this.balls);
+        this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
     }
 
     setup() {
@@ -112,7 +112,7 @@ export class Game {
 
         // draw on player layer
         this.ctx.player.clearRect(0, 0, this.canvases.player.width, this.canvases.player.height);
-        this.activePlayer.weapon.reticle.draw(this.ctx.player);
+        this.activePlayer.weapon.draw();
         drawPlayers(this.player1, this.player2, this.ctx.player);  
     }
 
