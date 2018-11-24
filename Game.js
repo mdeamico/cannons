@@ -1,7 +1,5 @@
 import { Terrain } from './Terrain.js';
-import { Ball } from './Ball.js';
 import { Player } from './Player.js';
-//import { Reticle } from './Reticle.js';
 import { Weapon } from './Weapon.js'
 
 export class Game {
