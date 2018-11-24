@@ -6,5 +6,6 @@ export class Player {
         this.myTurn = false;
         this.health = 100;
         this.color = "#000000";
+        this.weapon = null;
     }
 }

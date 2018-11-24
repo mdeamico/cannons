@@ -22,11 +22,13 @@ requestAnimationFrame(gameLoop);
 // Input Handler ---------------------------------------------------------------
 document.getElementById('player-layer').onmouseup = function(e) {
 
-    game.releaseBall(e);
+    game.activePlayer.weapon.fire();
+    game.switchPlayer();
 }
 
 
 document.getElementById('player-layer').onmousemove = function(e) {
 
-    game.triggerReticleUpdate(e);
+    game.activePlayer.weapon.aim(e, document.getElementById('player-layer').getBoundingClientRect());
+
 }
