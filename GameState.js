@@ -3,7 +3,8 @@ import { Game } from './Game.js';
 export class GameState {
     constructor(stateMachine) {
         this.stateMachine = stateMachine;
-        this.game = null
+        this.game = null;
+        this.loopID = null; // keep track of requestAnimationFrame ID
     }
 
     enter() {
@@ -35,14 +36,14 @@ export class GameState {
         );
 
         this.game.setup();
-        requestAnimationFrame(this.gameLoop.bind(this));
+        this.loopID = requestAnimationFrame(this.gameLoop.bind(this));
     }
 
     gameLoop(ts) {
         this.game.update();
         this.game.draw();
     
-        requestAnimationFrame(this.gameLoop.bind(this));
+        this.loopID = requestAnimationFrame(this.gameLoop.bind(this));
     }
 
 
