@@ -26,16 +26,20 @@ export class GameState {
 
         }.bind(this)
 
-        // Setup Game
-        this.game = new Game(
-            {
-                'terrain': document.getElementById('terrain-layer'),
-                'player': document.getElementById('player-layer'),
-                'projectile': document.getElementById('projectile-layer')
-            }
-        );
+        // Setup a new game if one is not already in progress
+        if (!this.game) {
+            this.game = new Game(
+                {
+                    'terrain': document.getElementById('terrain-layer'),
+                    'player': document.getElementById('player-layer'),
+                    'projectile': document.getElementById('projectile-layer')
+                }
+            );
 
-        this.game.setup();
+            this.game.setup();
+        }
+
+        // Start the game loop
         this.loopID = requestAnimationFrame(this.gameLoop.bind(this));
     }
 
@@ -48,12 +52,15 @@ export class GameState {
 
 
     exit() {
-        //TODO: Implement exit
+        cancelAnimationFrame(this.loopID);
+        document.getElementById('pause').onclick = null;
+        document.getElementById('player-layer').onmousemove = null;
+        document.getElementById('player-layer').onmouseup = null;
     }
 
     pause() {
-        //TODO: Implement pause
         console.log('pause!');
+        this.stateMachine.changeState('pauseState');
     }
 }
 

@@ -1,5 +1,6 @@
 import { MainMenuState } from './MainMenu.js';
 import { GameState } from './GameState.js';
+import { PauseState } from './PauseState.js';
 
 export class GameStateMachine {
     constructor() {
@@ -9,6 +10,7 @@ export class GameStateMachine {
         // Creating on-demand would prevent creating states never used.
         this.mainMenuState = new MainMenuState(this);
         this.gameState = new GameState(this);
+        this.pauseState = new PauseState(this);
     }
 
     changeState(newState) {
@@ -22,6 +24,9 @@ export class GameStateMachine {
                 break;
             case 'gameState' :
                 this.currentState = this.gameState;
+                break;
+            case 'pauseState' :
+                this.currentState = this.pauseState;
                 break;
             default:
                 console.error('Cannot enter state:', newState);
