@@ -6,7 +6,20 @@
     <title>Canvas Testing</title>
 </head>
 <style>
+  #main {
+    display: none;
+    width:600px;
+    height: 300px;
+    /*overflow: auto;*/
+    /*margin: auto;*/
+    position: absolute;
+    /*top: 0; left: 0; bottom: 0; right: 0;*/
+    box-sizing: border-box;
+    background-color: #c945458e;
+    z-index: 4;
+  }
   #stage {
+    display: none;
     width: 600px;
     height: 300px;
     position: relative;
@@ -16,14 +29,29 @@
   #player-layer { z-index: 3 }
   #projectile-layer { z-index: 2 }
   #terrain-layer { z-index: 1 }
+
+  #pause {
+    position: absolute;
+    top: 350px;
+  }
 </style>
 
 <body>
+<div id="wrapper">
+    <div id="main">
+        <ul>
+            <li><a href="#">Link1-TODO</a></li>
+            <li><a href="#">Link2-TODO</a></li>
+        </ul>
+        <button id="start">Start</button>
+    </div>
     <div id="stage">
         <canvas id="player-layer" width="600" height="300"></canvas>
         <canvas id="projectile-layer" width="600" height="300"></canvas>
         <canvas id="terrain-layer" width="600" height="300"></canvas>
+        <button id="pause">Pause-TODO</button>
     </div>
+</div>
 </body>
 <script type="module" src="main.js"></script>
 </html>
