@@ -16,11 +16,11 @@ export class Game {
 
         this.balls = [];
 
-        this.player1 = new Player();
+        this.player1 = new Player(1);
         this.player1.color = "#B357AE";
         this.player1.weapon = new Weapon(this.player1, this.balls, this.ctx.player);
 
-        this.player2 = new Player();
+        this.player2 = new Player(2);
         this.player2.color = "#57aeb3";
         this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
     }
@@ -83,14 +83,16 @@ export class Game {
             drawTerrain(this.terrain, this.canvases.terrain);
 
             // Collision w/ Players
-            if (Math.abs(ball.x - this.player1.x) < 10 /*tolerance*/) {
-                this.player1.health -= 10;
-                console.log('Player1 Hit! Health: ', this.player1.health);
+            function checkPlayerCollision(player) {
+                const hitTolerance = 50;
+                const distToplayer = Math.abs(ball.x - player.x);
+
+                if (distToplayer < hitTolerance) {
+                    player.changeHealth(-Math.round(hitTolerance - distToplayer));
+                }
             }
-            if (Math.abs(ball.x - this.player2.x) < 10 /*tolerance*/) {
-                this.player2.health -= 10;
-                console.log('Player2 Hit! Health: ', this.player2.health);
-            }
+            checkPlayerCollision(this.player1);
+            checkPlayerCollision(this.player2);
         }
 
         // remove balls that hit the terrain

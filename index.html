@@ -47,6 +47,16 @@
     position: absolute;
     top: 350px;
   }
+
+  #Player1-health {
+    position: absolute;
+    top: 300px;
+  }
+  #Player2-health {
+    position: absolute;
+    top: 315px;
+  }
+
 </style>
 
 <body>
@@ -66,8 +76,11 @@
     <canvas id="projectile-layer" width="600" height="300"></canvas>
     <canvas id="terrain-layer" width="600" height="300"></canvas>
     <button id="pause">Pause</button>
+    <p id="Player1-health">Player1 Health</p>
+    <p id="Player2-health">Player2 Health</p>
   </div>
 </div>
 </body>
 <script type="module" src="main.js"></script>
+<script src="pubsub.js"></script>
 </html>
