@@ -1,6 +1,7 @@
 import { Terrain } from './Terrain.js';
 import { Player } from './Player.js';
 import { Weapon } from './Weapon.js'
+import { Weapon2 } from './Weapon2.js'
 
 export class Game {
     
@@ -22,7 +23,7 @@ export class Game {
 
         this.player2 = new Player(2);
         this.player2.color = "#57aeb3";
-        this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
+        this.player2.weapon = new Weapon2(this.player2, this.balls, this.ctx.player);
     }
 
     setup() {
