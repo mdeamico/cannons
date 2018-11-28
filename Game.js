@@ -83,14 +83,16 @@ export class Game {
             drawTerrain(this.terrain, this.canvases.terrain);
 
             // Collision w/ Players
-            if (Math.abs(ball.x - this.player1.x) < 10 /*tolerance*/) {
-                this.player1.health -= 10;
-                console.log('Player1 Hit! Health: ', this.player1.health);
+            function checkPlayerCollision(player) {
+                const hitTolerance = 50;
+                const distToplayer = Math.abs(ball.x - player.x);
+
+                if (distToplayer < hitTolerance) {
+                    player.changeHealth(-Math.round(hitTolerance - distToplayer));
+                }
             }
-            if (Math.abs(ball.x - this.player2.x) < 10 /*tolerance*/) {
-                this.player2.health -= 10;
-                console.log('Player2 Hit! Health: ', this.player2.health);
-            }
+            checkPlayerCollision(this.player1);
+            checkPlayerCollision(this.player2);
         }
 
         // remove balls that hit the terrain
