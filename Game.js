@@ -16,11 +16,11 @@ export class Game {
 
         this.balls = [];
 
-        this.player1 = new Player();
+        this.player1 = new Player(1);
         this.player1.color = "#B357AE";
         this.player1.weapon = new Weapon(this.player1, this.balls, this.ctx.player);
 
-        this.player2 = new Player();
+        this.player2 = new Player(2);
         this.player2.color = "#57aeb3";
         this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
     }
