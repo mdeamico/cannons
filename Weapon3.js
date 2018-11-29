@@ -54,7 +54,6 @@ export class Weapon3 {
     }
 
     releaseCluster(ballData) {
-        console.log('release!');
         let coordinates = {x: ballData.x, y: ballData.y}
         let submunition1 = {
             vx: ballData.vx * 0.9,
@@ -68,12 +67,12 @@ export class Weapon3 {
             vx: ballData.vx * 1.1,
             coordinates: coordinates
         }
-        this.makeBall(submunition1);
-        this.makeBall(submunition2);
-        this.makeBall(submunition3);
+        this.makeSubmunition(submunition1);
+        this.makeSubmunition(submunition2);
+        this.makeSubmunition(submunition3);
     }
 
-    makeBall(parameters) {
+    makeSubmunition(parameters) {
         let ball = new Ball(33);
         ball.color = this.player.color;
         ball.x = parameters.coordinates.x;
