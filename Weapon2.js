@@ -47,7 +47,7 @@ export class Weapon2 {
     }
 
     releaseBall(power) {
-        let ball = new Ball();
+        let ball = new Ball(33);
         ball.color = this.player.color;
         ball.x = this.player.x - 3;
         ball.y = this.player.y - 5;

@@ -89,7 +89,8 @@ export class Game {
                 const distToplayer = Math.abs(ball.x - player.x);
 
                 if (distToplayer < hitTolerance) {
-                    player.changeHealth(-Math.round(hitTolerance - distToplayer));
+                    player.changeHealth(
+                        -Math.round((hitTolerance - distToplayer) * ball.strength / 100));
                 }
             }
             checkPlayerCollision(this.player1);

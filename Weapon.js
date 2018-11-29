@@ -41,7 +41,7 @@ export class Weapon {
         this.ammunition -= 1;
         console.log('Player ', this.player.color, ' fires!');
 
-        let ball = new Ball();
+        let ball = new Ball(100);
         ball.color = this.player.color;
         ball.x = this.player.x - 3;
         ball.y = this.player.y - 5;

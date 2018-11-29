@@ -1,5 +1,5 @@
 export class Ball {
-    constructor() {
+    constructor(strength) {
         this.x = 0;
         this.y = 0;
         this.radius = 3;
@@ -7,5 +7,6 @@ export class Ball {
         this.vy = -1;
         this.isAlive = true;
         this.color = "#000000";
+        this.strength = strength;
     }
 }
