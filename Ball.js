@@ -9,4 +9,6 @@ export class Ball {
         this.color = "#000000";
         this.strength = strength;
     }
+
+    update() { /*empty */}
 }

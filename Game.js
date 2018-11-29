@@ -69,6 +69,8 @@ export class Game {
             {
                 ball.isAlive = false;
             }
+
+            ball.update();
         }
 
         // damage terrain and players for balls that hit the terrain
