@@ -79,12 +79,14 @@ export class Game {
             if (ball.isAlive) continue;
             
             // Collision w/ Terrain
-            let minX = Math.max(0, Math.floor(ball.x - ball.radius));
-            let maxX = Math.min(this.terrain.elevations.length, Math.floor(ball.x + ball.radius));
-            for (let x = minX; x < maxX; ++x) {
-                this.terrain.elevations[x] += ball.radius;
+            if (ball.y >= this.terrain.elevations[Math.floor(ball.x)]) {
+                let minX = Math.max(0, Math.floor(ball.x - ball.radius));
+                let maxX = Math.min(this.terrain.elevations.length, Math.floor(ball.x + ball.radius));
+                for (let x = minX; x < maxX; ++x) {
+                    this.terrain.elevations[x] += ball.radius;
+                }
+                drawTerrain(this.terrain, this.canvases.terrain);
             }
-            drawTerrain(this.terrain, this.canvases.terrain);
 
             // Collision w/ Players
             function checkPlayerCollision(player) {
@@ -100,7 +102,7 @@ export class Game {
             checkPlayerCollision(this.player2);
         }
 
-        // remove balls that hit the terrain
+        // remove dead balls
         for (let i = this.balls.length - 1; i >= 0; --i) {
             let ball = this.balls[i];
 
