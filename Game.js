@@ -6,25 +6,54 @@ import { Weapon3 } from './Weapon3.js'
 
 export class Game {
     
-    constructor(canvases) {
-        this.canvases = canvases;
+    constructor(parameters) {
+        console.log(parameters);
+        this.canvases = parameters.canvases;
         this.ctx = {
-            'terrain': canvases.terrain.getContext('2d'),
-            'player': canvases.player.getContext('2d'),
-            'projectile': canvases.projectile.getContext('2d'),
+            'terrain': this.canvases.terrain.getContext('2d'),
+            'player': this.canvases.player.getContext('2d'),
+            'projectile': this.canvases.projectile.getContext('2d'),
         }
 
-        this.terrain = new Terrain(canvases.terrain);
+        this.terrain = new Terrain(this.canvases.terrain);
 
         this.balls = [];
 
         this.player1 = new Player(1);
         this.player1.color = "#B357AE";
-        this.player1.weapon = new Weapon3(this.player1, this.balls, this.ctx.player);
-
+        
+        
+        switch(parameters.options.Player1Weapon) {
+            case 'Weapon1' :
+                this.player1.weapon = new Weapon(this.player1, this.balls, this.ctx.player);
+                break;
+            case 'Weapon2' :
+                this.player1.weapon = new Weapon2(this.player1, this.balls, this.ctx.player);
+                break;
+            case 'Weapon3' :
+                this.player1.weapon = new Weapon3(this.player1, this.balls, this.ctx.player);
+                break;
+            default:
+                console.error('Cannot assign Player1 weapon:', parameters.options.Player1Weapon);
+                return;
+        }
+        
         this.player2 = new Player(2);
         this.player2.color = "#57aeb3";
-        this.player2.weapon = new Weapon2(this.player2, this.balls, this.ctx.player);
+        switch(parameters.options.Player2Weapon) {
+            case 'Weapon1' :
+                this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
+                break;
+            case 'Weapon2' :
+                this.player2.weapon = new Weapon2(this.player2, this.balls, this.ctx.player);
+                break;
+            case 'Weapon3' :
+                this.player2.weapon = new Weapon3(this.player2, this.balls, this.ctx.player);
+                break;
+            default:
+                console.error('Cannot assign Player2 weapon:', parameters.options.Player2Weapon);
+                return;
+        }
     }
 
     setup() {

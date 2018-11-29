@@ -15,7 +15,12 @@ export class MainMenuState {
 
     onStartBtn() {
         console.log("Start Button clicked!!");
-        this.stateMachine.changeState('gameState');
+        let initData = {
+            Player1Weapon: document.querySelector('input[name="Player1-weapon"]:checked').value,
+            Player2Weapon: document.querySelector('input[name="Player2-weapon"]:checked').value
+        }
+        
+        this.stateMachine.changeState('gameState', initData);
     }
 
 }
