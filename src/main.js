@@ -1,4 +1,4 @@
-import { GameStateMachine } from './GameStateMachine.js';
+import { GameStateMachine } from './game_states/GameStateMachine.js';
 
 class Application {
     constructor() {

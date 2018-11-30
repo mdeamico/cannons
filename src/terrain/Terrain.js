@@ -1,4 +1,4 @@
-import Noise1D from '/Noise1D.js';
+import Noise1D from './Noise1D.js';
 export class Terrain {
     constructor(canvas) {
         this.elevations = [];

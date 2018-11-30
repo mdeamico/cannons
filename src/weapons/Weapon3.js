@@ -1,5 +1,5 @@
-import { ClusterBall } from './ClusterBall.js'
-import { Ball } from './Ball.js'
+import { ClusterBall } from './munitions/ClusterBall.js'
+import { Ball } from './munitions/Ball.js'
 
 export class Weapon3 {
     constructor(player, balls, ctx) {

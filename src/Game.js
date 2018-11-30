@@ -1,8 +1,8 @@
-import { Terrain } from './Terrain.js';
+import { Terrain } from './terrain/Terrain.js';
 import { Player } from './Player.js';
-import { Weapon } from './Weapon.js'
-import { Weapon2 } from './Weapon2.js'
-import { Weapon3 } from './Weapon3.js'
+import { Weapon } from './weapons/Weapon.js'
+import { Weapon2 } from './weapons/Weapon2.js'
+import { Weapon3 } from './weapons/Weapon3.js'
 
 export class Game {
     

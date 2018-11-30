@@ -1,6 +1,6 @@
-import { Ball } from './Ball.js'
+import { Ball } from './munitions/Ball.js'
 
-export class Weapon2 {
+export class Weapon {
     constructor(player, balls, ctx) {
         this.balls = balls;
         this.player = player;
@@ -41,19 +41,13 @@ export class Weapon2 {
         this.ammunition -= 1;
         console.log('Player ', this.player.color, ' fires!');
 
-        this.releaseBall(this.aimPower * 0.9);
-        this.releaseBall(this.aimPower);
-        this.releaseBall(this.aimPower * 1.1);
-    }
-
-    releaseBall(power) {
-        let ball = new Ball(33);
+        let ball = new Ball(100);
         ball.color = this.player.color;
         ball.x = this.player.x - 3;
         ball.y = this.player.y - 5;
         
-        ball.vx = power / 10 * Math.cos(this.aimAngle);
-        ball.vy = -power / 10 * Math.sin(this.aimAngle);
+        ball.vx = this.aimPower / 10 * Math.cos(this.aimAngle);
+        ball.vy = -this.aimPower / 10 * Math.sin(this.aimAngle);
     
         this.balls.push(ball);
     }
