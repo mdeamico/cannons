@@ -21,39 +21,11 @@ export class Game {
 
         this.player1 = new Player(1);
         this.player1.color = "#B357AE";
-        
-        
-        switch(parameters.options.Player1Weapon) {
-            case 'Weapon1' :
-                this.player1.weapon = new Weapon(this.player1, this.balls, this.ctx.player);
-                break;
-            case 'Weapon2' :
-                this.player1.weapon = new Weapon2(this.player1, this.balls, this.ctx.player);
-                break;
-            case 'Weapon3' :
-                this.player1.weapon = new Weapon3(this.player1, this.balls, this.ctx.player);
-                break;
-            default:
-                console.error('Cannot assign Player1 weapon:', parameters.options.Player1Weapon);
-                return;
-        }
+        assignWeapon(this.player1, parameters.options.Player1Weapon, this.balls, this.ctx.player);
         
         this.player2 = new Player(2);
         this.player2.color = "#57aeb3";
-        switch(parameters.options.Player2Weapon) {
-            case 'Weapon1' :
-                this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
-                break;
-            case 'Weapon2' :
-                this.player2.weapon = new Weapon2(this.player2, this.balls, this.ctx.player);
-                break;
-            case 'Weapon3' :
-                this.player2.weapon = new Weapon3(this.player2, this.balls, this.ctx.player);
-                break;
-            default:
-                console.error('Cannot assign Player2 weapon:', parameters.options.Player2Weapon);
-                return;
-        }
+        assignWeapon(this.player2, parameters.options.Player2Weapon, this.balls, this.ctx.player);
     }
 
     setup() {
@@ -196,4 +168,21 @@ function drawPlayers(player1, player2, ctx) {
     
     ctx.fillStyle = player2.color;
     ctx.fillRect(player2.x - 3, player2.y - 5, 6, 5);
+}
+
+function assignWeapon(player, weapon, balls, ctx) {
+    switch(weapon) {
+        case 'Weapon1' :
+            player.weapon = new Weapon(player, balls, ctx);
+            break;
+        case 'Weapon2' :
+            player.weapon = new Weapon2(player, balls, ctx);
+            break;
+        case 'Weapon3' :
+            player.weapon = new Weapon3(player, balls, ctx);
+            break;
+        default:
+            console.error('Cannot assign Player weapon:', weapon);
+            return;
+    }
 }
