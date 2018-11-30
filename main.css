@@ -1,0 +1,50 @@
+#main {
+  display: none;
+  width:600px;
+  height: 300px;
+  /*overflow: auto;*/
+  /*margin: auto;*/
+  position: absolute;
+  /*top: 0; left: 0; bottom: 0; right: 0;*/
+  box-sizing: border-box;
+  background-color: #c945458e;
+  z-index: 5;
+}
+#pause-container {
+  display: none;
+  width:600px;
+  height: 300px;
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #4276a144;
+  z-index: 4;
+}
+#stage {
+  display: none;
+  width: 600px;
+  height: 300px;
+  position: relative;
+  border: 2px solid black;
+  /*box-sizing: border-box;*/
+}
+canvas { 
+  position: absolute;
+  /*box-sizing: border-box;*/
+}
+#player-layer { z-index: 3 }
+#projectile-layer { z-index: 2 }
+#terrain-layer { z-index: 1 }
+
+#pause {
+  position: absolute;
+  top: 350px;
+}
+
+#Player1-health {
+  position: absolute;
+  top: 300px;
+}
+#Player2-health {
+  position: absolute;
+  top: 315px;
+}

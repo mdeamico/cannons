@@ -1,6 +1,7 @@
+import { ClusterBall } from './ClusterBall.js'
 import { Ball } from './Ball.js'
 
-export class Weapon {
+export class Weapon3 {
     constructor(player, balls, ctx) {
         this.balls = balls;
         this.player = player;
@@ -41,13 +42,44 @@ export class Weapon {
         this.ammunition -= 1;
         console.log('Player ', this.player.color, ' fires!');
 
-        let ball = new Ball(100);
+        let ball = new ClusterBall(100, this.releaseCluster.bind(this));
         ball.color = this.player.color;
         ball.x = this.player.x - 3;
         ball.y = this.player.y - 5;
         
         ball.vx = this.aimPower / 10 * Math.cos(this.aimAngle);
         ball.vy = -this.aimPower / 10 * Math.sin(this.aimAngle);
+    
+        this.balls.push(ball);
+    }
+
+    releaseCluster(ballData) {
+        let coordinates = {x: ballData.x, y: ballData.y}
+        let submunition1 = {
+            vx: ballData.vx * 0.9,
+            coordinates: coordinates
+        }
+        let submunition2 = {
+            vx: ballData.vx * 1.0,
+            coordinates: coordinates
+        }
+        let submunition3 = {
+            vx: ballData.vx * 1.1,
+            coordinates: coordinates
+        }
+        this.makeSubmunition(submunition1);
+        this.makeSubmunition(submunition2);
+        this.makeSubmunition(submunition3);
+    }
+
+    makeSubmunition(parameters) {
+        let ball = new Ball(33);
+        ball.color = this.player.color;
+        ball.x = parameters.coordinates.x;
+        ball.y = parameters.coordinates.y;
+        
+        ball.vx = parameters.vx;
+        ball.vy = 0
     
         this.balls.push(ball);
     }

@@ -13,7 +13,7 @@ export class GameStateMachine {
         this.pauseState = new PauseState(this);
     }
 
-    changeState(newState) {
+    changeState(newState, parameters) {
         if (this.currentState) {
             this.currentState.exit();
         }
@@ -33,6 +33,6 @@ export class GameStateMachine {
                 return;
         }
 
-        this.currentState.enter();
+        this.currentState.enter(parameters);
     }
 }

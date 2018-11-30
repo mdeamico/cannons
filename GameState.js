@@ -7,7 +7,7 @@ export class GameState {
         this.loopID = null; // keep track of requestAnimationFrame ID
     }
 
-    enter() {
+    enter(parameters) {
         document.getElementById('stage').style.display = 'block';
         
         // Setup UI functions
@@ -32,9 +32,12 @@ export class GameState {
         if (!this.game) {
             this.game = new Game(
                 {
-                    'terrain': document.getElementById('terrain-layer'),
-                    'player': document.getElementById('player-layer'),
-                    'projectile': document.getElementById('projectile-layer')
+                    canvases: {
+                        terrain:    document.getElementById('terrain-layer'),
+                        player:     document.getElementById('player-layer'),
+                        projectile: document.getElementById('projectile-layer'),
+                    },
+                    options: parameters
                 }
             );
 

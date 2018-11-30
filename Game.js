@@ -1,28 +1,59 @@
 import { Terrain } from './Terrain.js';
 import { Player } from './Player.js';
 import { Weapon } from './Weapon.js'
+import { Weapon2 } from './Weapon2.js'
+import { Weapon3 } from './Weapon3.js'
 
 export class Game {
     
-    constructor(canvases) {
-        this.canvases = canvases;
+    constructor(parameters) {
+        console.log(parameters);
+        this.canvases = parameters.canvases;
         this.ctx = {
-            'terrain': canvases.terrain.getContext('2d'),
-            'player': canvases.player.getContext('2d'),
-            'projectile': canvases.projectile.getContext('2d'),
+            'terrain': this.canvases.terrain.getContext('2d'),
+            'player': this.canvases.player.getContext('2d'),
+            'projectile': this.canvases.projectile.getContext('2d'),
         }
 
-        this.terrain = new Terrain(canvases.terrain);
+        this.terrain = new Terrain(this.canvases.terrain);
 
         this.balls = [];
 
         this.player1 = new Player(1);
         this.player1.color = "#B357AE";
-        this.player1.weapon = new Weapon(this.player1, this.balls, this.ctx.player);
-
+        
+        
+        switch(parameters.options.Player1Weapon) {
+            case 'Weapon1' :
+                this.player1.weapon = new Weapon(this.player1, this.balls, this.ctx.player);
+                break;
+            case 'Weapon2' :
+                this.player1.weapon = new Weapon2(this.player1, this.balls, this.ctx.player);
+                break;
+            case 'Weapon3' :
+                this.player1.weapon = new Weapon3(this.player1, this.balls, this.ctx.player);
+                break;
+            default:
+                console.error('Cannot assign Player1 weapon:', parameters.options.Player1Weapon);
+                return;
+        }
+        
         this.player2 = new Player(2);
         this.player2.color = "#57aeb3";
-        this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
+        switch(parameters.options.Player2Weapon) {
+            case 'Weapon1' :
+                this.player2.weapon = new Weapon(this.player2, this.balls, this.ctx.player);
+                break;
+            case 'Weapon2' :
+                this.player2.weapon = new Weapon2(this.player2, this.balls, this.ctx.player);
+                break;
+            case 'Weapon3' :
+                this.player2.weapon = new Weapon3(this.player2, this.balls, this.ctx.player);
+                break;
+            default:
+                console.error('Cannot assign Player2 weapon:', parameters.options.Player2Weapon);
+                return;
+        }
     }
 
     setup() {
@@ -68,6 +99,8 @@ export class Game {
             {
                 ball.isAlive = false;
             }
+
+            ball.update();
         }
 
         // damage terrain and players for balls that hit the terrain
@@ -75,12 +108,14 @@ export class Game {
             if (ball.isAlive) continue;
             
             // Collision w/ Terrain
-            let minX = Math.max(0, Math.floor(ball.x - ball.radius));
-            let maxX = Math.min(this.terrain.elevations.length, Math.floor(ball.x + ball.radius));
-            for (let x = minX; x < maxX; ++x) {
-                this.terrain.elevations[x] += ball.radius;
+            if (ball.y >= this.terrain.elevations[Math.floor(ball.x)]) {
+                let minX = Math.max(0, Math.floor(ball.x - ball.radius));
+                let maxX = Math.min(this.terrain.elevations.length, Math.floor(ball.x + ball.radius));
+                for (let x = minX; x < maxX; ++x) {
+                    this.terrain.elevations[x] += ball.radius;
+                }
+                drawTerrain(this.terrain, this.canvases.terrain);
             }
-            drawTerrain(this.terrain, this.canvases.terrain);
 
             // Collision w/ Players
             function checkPlayerCollision(player) {
@@ -88,14 +123,15 @@ export class Game {
                 const distToplayer = Math.abs(ball.x - player.x);
 
                 if (distToplayer < hitTolerance) {
-                    player.changeHealth(-Math.round(hitTolerance - distToplayer));
+                    player.changeHealth(
+                        -Math.round((hitTolerance - distToplayer) * ball.strength / 100));
                 }
             }
             checkPlayerCollision(this.player1);
             checkPlayerCollision(this.player2);
         }
 
-        // remove balls that hit the terrain
+        // remove dead balls
         for (let i = this.balls.length - 1; i >= 0; --i) {
             let ball = this.balls[i];
 
