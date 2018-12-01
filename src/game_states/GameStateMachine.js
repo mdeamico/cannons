@@ -1,6 +1,7 @@
 import { MainMenuState } from './MainMenu.js';
 import { GameState } from './GameState.js';
 import { PauseState } from './PauseState.js';
+import { GameOverState } from './GameOver.js';
 
 export class GameStateMachine {
     constructor() {
@@ -11,6 +12,7 @@ export class GameStateMachine {
         this.mainMenuState = new MainMenuState(this);
         this.gameState = new GameState(this);
         this.pauseState = new PauseState(this);
+        this.gameOverState = new GameOverState(this);
     }
 
     changeState(newState, parameters) {
@@ -27,6 +29,9 @@ export class GameStateMachine {
                 break;
             case 'pauseState' :
                 this.currentState = this.pauseState;
+                break;
+            case 'gameOverState' :
+                this.currentState = this.gameOverState;
                 break;
             default:
                 console.error('Cannot enter state:', newState);

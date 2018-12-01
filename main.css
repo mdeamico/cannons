@@ -10,6 +10,15 @@
   background-color: #c945458e;
   z-index: 5;
 }
+#gameover-container {
+  display: none;
+  width:600px;
+  height: 300px;
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #4276a144;
+  z-index: 4;
+}
 #pause-container {
   display: none;
   width:600px;
