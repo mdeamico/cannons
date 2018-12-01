@@ -10,10 +10,6 @@ export class GameStateMachine {
         // TODO: consider constructing states on-demand rather than creating here.
         // Creating on-demand would prevent creating states never used.
         this.reset();
-        // this.mainMenuState = new MainMenuState(this);
-        // this.gameState = new GameState(this);
-        // this.pauseState = new PauseState(this);
-        // this.gameOverState = new GameOverState(this);
     }
 
     changeState(newState, parameters) {
