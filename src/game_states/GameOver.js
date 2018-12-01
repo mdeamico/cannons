@@ -15,9 +15,7 @@ export class GameOverState {
 
     restart() {
         console.log("restart game");
-        
-        // TODO: delete current game
-
+        this.stateMachine.reset();
         this.stateMachine.changeState('mainMenuState');
     }
 
