@@ -27,6 +27,7 @@ export class GameState {
         }.bind(this)
 
         window.PubSub.subscribe('Player-health-change', this.subUI_health);
+        window.PubSub.subscribe('Player-died', this.endGame.bind(this));
 
         // Setup a new game if one is not already in progress
         if (!this.game) {
@@ -66,6 +67,11 @@ export class GameState {
     pause() {
         console.log('pause!');
         this.stateMachine.changeState('pauseState');
+    }
+
+    endGame(msg, data) {
+        console.log('end game');
+        this.stateMachine.changeState('gameOverState');        
     }
 
     subUI_health(msg, data) {

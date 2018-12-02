@@ -98,6 +98,11 @@ export class Game {
                     player.changeHealth(
                         -Math.round((hitTolerance - distToplayer) * ball.strength / 100));
                 }
+
+                if (player.health <= 0) {
+                    window.PubSub.publish('Player-died', {playerID: player.id});
+                }
+
             }
             checkPlayerCollision(this.player1);
             checkPlayerCollision(this.player2);
