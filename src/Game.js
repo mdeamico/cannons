@@ -1,8 +1,10 @@
 import { Terrain } from './terrain/Terrain.js';
 import { Player } from './Player.js';
+import { PlayerBot } from './PlayerBot.js';
 import { Weapon } from './weapons/Weapon.js'
 import { Weapon2 } from './weapons/Weapon2.js'
 import { Weapon3 } from './weapons/Weapon3.js'
+import { WeaponTracer } from './weapons/WeaponTracer.js'
 
 export class Game {
     
@@ -23,9 +25,26 @@ export class Game {
         this.player1.color = "#B357AE";
         assignWeapon(this.player1, parameters.options.Player1Weapon, this.balls, this.ctx.player);
         
-        this.player2 = new Player(2);
+        
+        if (parameters.options.Player2Type == "Human") {
+            this.player2 = new Player(2);
+        } else {
+            this.player2 = new PlayerBot(2);
+            this.player2.weaponTracer = 
+                new WeaponTracer(
+                    this.player2,
+                    this.balls,
+                    this.ctx.terrain,
+                    this.terrain, 
+                    this.canvases.projectile,
+                    this.player1);
+
+             window.PubSub.subscribe('bot-attacked', this.switchPlayer.bind(this));
+        }
+
         this.player2.color = "#57aeb3";
         assignWeapon(this.player2, parameters.options.Player2Weapon, this.balls, this.ctx.player);
+
     }
 
     setup() {
@@ -101,6 +120,9 @@ export class Game {
 
                 if (player.health <= 0) {
                     window.PubSub.publish('Player-died', {playerID: player.id});
+                    // clean up PubSub subscriptions
+                    window.PubSub.unsubscribe('ball-launched');
+                    window.PubSub.unsubscribe('bot-attacked');
                 }
 
             }
@@ -137,8 +159,11 @@ export class Game {
         }
         this.player1.myTurn = !this.player1.myTurn;
         this.player2.myTurn = !this.player2.myTurn;
-    }
 
+        if (this.activePlayer.isBot) {
+            this.activePlayer.attack();
+        }
+    }
 }
 
 

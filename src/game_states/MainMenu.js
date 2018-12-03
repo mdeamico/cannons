@@ -17,6 +17,7 @@ export class MainMenuState {
         console.log("Start Button clicked!!");
         let initData = {
             Player1Weapon: document.querySelector('input[name="Player1-weapon"]:checked').value,
+            Player2Type: document.querySelector('input[name="Player2-type"]:checked').value,
             Player2Weapon: document.querySelector('input[name="Player2-weapon"]:checked').value
         }
         
