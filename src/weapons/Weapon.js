@@ -26,8 +26,11 @@ export class Weapon {
 
         this.aimAngle = Math.atan2(-dy, dx);
         this.aimPower = Math.sqrt(Math.pow(dy, 2), Math.pow(dx, 2));
-        // Limit aimPower
         this.aimPower = 20 + (this.aimPower - 100) * (50 - 20) / (200 - 100);
+        this.limitPower();
+    }
+
+    limitPower() {
         this.aimPower = this.aimPower > 50 ? 50 : this.aimPower; 
         this.aimPower = this.aimPower < 10 ? 10 : this.aimPower;
     }
@@ -39,7 +42,7 @@ export class Weapon {
         }
 
         this.ammunition -= 1;
-        console.log('Player ', this.player.color, ' fires!');
+        console.log('Player ', this.player.color, ' fires, with power: ', this.aimPower);
 
         let ball = new Ball(100);
         ball.color = this.player.color;
